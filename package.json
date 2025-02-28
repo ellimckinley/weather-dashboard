@@ -10,9 +10,9 @@
     "server": "cd server && npm start",
     "server:dev": "cd server && npm run dev",
     "install": "cd server && npm i && cd ../client && npm i",
+    "build": "cd client && npm run build && mkdir -p ../public && cp ./index.html ../public/",
     "client:build": "cd client && npm run build",
     "client:dev": "cd client && npm run dev",
-    "build": "cd client && npm run build",
     "render-build": "npm install && npm run build"
   },
   "keywords": [],
