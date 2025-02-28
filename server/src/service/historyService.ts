@@ -44,11 +44,13 @@ class HistoryService {
     return await this.read();
   }
   // TODO Define an addCity method that adds a city to the searchHistory.json file
-  async addCity(city: City): Promise<void> {
+  async addCity(cityName: string): Promise<void> {
     const cities = await this.read();
-    cities.push(city);
+    const newCity = new City(cityName, Date.now()); // Use timestamp as unique ID
+    cities.push(newCity);
     await this.write(cities);
   }
+  
   // * BONUS TODO: Define a removeCity method that removes a city from the searchHistory.json file
   async removeCity(id: number): Promise<void> {
     let cities = await this.read();

@@ -1,12 +1,11 @@
 import { Router, type Request, type Response } from 'express';
 const router = Router();
 
-import HistoryService, { City } from '../../service/historyService.js';
+import HistoryService from '../../service/historyService.js';
 import WeatherService from '../../service/weatherService.js';
 
 // TODO: POST Request with city name to retrieve weather data
 const getWeatherData = async (req: Request, res: Response) => {
-  // TODO: GET weather data from city name
   console.log('Request body:', req.body);
   const cityName = req.body.cityName;
   if (!cityName) {
@@ -21,12 +20,15 @@ const getWeatherData = async (req: Request, res: Response) => {
 
     // Assuming weatherData is an array of weather objects
     const formattedWeatherData = weatherData.map((data: any) => ({
+      city: cityName,
+      date: new Date().toLocaleDateString(), // Add the date property
       temperature: data.temperature,
       humidity: data.humidity,
       description: data.description,
+      wind: data.wind, // Add wind data
     }));
 
-    await HistoryService.addCity(new City(cityName, Date.now())); 
+    await HistoryService.addCity(cityName); 
     console.log('City added to history:', cityName);
     return res.json(formattedWeatherData);
   } catch (error) {

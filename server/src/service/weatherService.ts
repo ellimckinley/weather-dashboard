@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-// TODO: Define an interface for the Coordinates object
+// Define an interface for the Coordinates object
 interface Coordinates {
   lat: number;
   lon: number;
@@ -12,15 +12,17 @@ class Weather {
   temperature: number;
   humidity: number;
   description: string;
+  windSpeed: number; // Add windSpeed property
 
-  constructor(temperature: number, humidity: number, description: string) {
+  constructor(temperature: number, humidity: number, description: string, windSpeed: number) {
     this.temperature = temperature;
     this.humidity = humidity;
     this.description = description;
+    this.windSpeed = windSpeed; // Initialize windSpeed
   }
 }
 
-// TODO: Complete the WeatherService class
+// Complete the WeatherService class
 class WeatherService {
   private baseURL: string;
   private geocodeBaseURL: string;
@@ -32,7 +34,7 @@ class WeatherService {
     this.apiKey = process.env.API_KEY || '';
   }
   
-  // TODO: Create fetchLocationData method
+  // Create fetchLocationData method
   private async fetchLocationData(cityName: string): Promise<any> {
     const response = await fetch(this.buildGeocodeQuery(cityName));
     if (!response.ok) {
@@ -46,7 +48,6 @@ class WeatherService {
     return data;
   }
 
-
   // Create buildGeocodeQuery method
   private buildGeocodeQuery(cityName: string): string {
     return `${this.geocodeBaseURL}?q=${cityName}&appid=${this.apiKey}`;
@@ -57,13 +58,13 @@ class WeatherService {
     return `${this.baseURL}?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${this.apiKey}`;
   }
 
-  // TODO: Create fetchAndDestructureLocationData method
+  // Create fetchAndDestructureLocationData method
   private async fetchAndDestructureLocationData(cityName: string): Promise<Coordinates> {
     const locationData = await this.fetchLocationData(cityName);
     return this.destructureLocationData(locationData);
   }
 
-  // TODO: Create fetchWeatherData method
+  // Create fetchWeatherData method
   private async fetchWeatherData(coordinates: Coordinates): Promise<any> {
     const response = await fetch(this.buildWeatherQuery(coordinates));
     if (!response.ok) {
@@ -86,28 +87,32 @@ class WeatherService {
     return coordinates;
   }
 
-  // TODO: Build parseCurrentWeather method
+  // Build parseCurrentWeather method
   private parseCurrentWeather(response: any): Weather {
     const currentWeather = response.list[0];
     const weather = new Weather(
       currentWeather.main.temp,
       currentWeather.main.humidity,
-      currentWeather.weather[0].description
+      currentWeather.weather[0].description,
+      currentWeather.wind.speed // Add wind speed
     );
     return weather;
   }
-  // TODO: Complete buildForecastArray method
+
+  // Complete buildForecastArray method
   private buildForecastArray(currentWeather: Weather, weatherData: any[]): Weather[] {
     const forecastArray: Weather[] = weatherData.map((data) => {
       return new Weather(
         data.main.temp,
         data.main.humidity,
-        data.weather[0].description
+        data.weather[0].description,
+        data.wind.speed // Add wind speed
       );
     });
     return [currentWeather, ...forecastArray];
   }
-  // TODO: Complete getWeatherForCity method
+
+  // Complete getWeatherForCity method
   async getWeatherForCity(city: string): Promise<Weather[]> {
     try {
       const coordinates = await this.fetchAndDestructureLocationData(city);
