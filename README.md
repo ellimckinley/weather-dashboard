@@ -62,3 +62,5 @@ Checkout my other GitHub projects: @ellimckinley.
 
 ## Resources
 - OpenWeather for providing the weather data APIs.
+
+Deployed Application: https://weather-dashboard-vm5a.onrender.com
