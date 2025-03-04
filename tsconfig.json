@@ -24,12 +24,6 @@
     "exactOptionalPropertyTypes": true /* Interpret optional property types as written, rather than adding 'undefined'. */,
     "noImplicitReturns": true /* Enable error reporting for codepaths that do not explicitly return in a function. */,
     "noImplicitOverride": true /* Ensure overriding members in derived classes are marked with an override modifier. */,
-    "useUnknownInCatchVariables": true, /* Ensure 'unknown' is used for catch clause variables. */
-  
-    /* Output */
-    "outDir": "./dist", /* Specify an output folder for all emitted files. */
-    // "rootDir": "." /*added as troubleshooting*/
-  },
-  "include": ["server/src", "client/src"],
-  "exclude": ["node_modules", "dist"]
+    "useUnknownInCatchVariables": true /* Ensure 'unknown' is used for catch clause variables. */
+  }
 }
