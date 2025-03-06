@@ -2,7 +2,6 @@
 
 ## Description
 The Weather Dashboard is a web application that provides a 5-day weather forecast for any city using the OpenWeather 5 Day Forecast and Geocode APIs. This application allows users to search for a city and view the weather forecast, including temperature, humidity, wind speed, and weather conditions.
-![Weather Dashboard Screenshot](./client/dist/assets/image.png)
 
 ## Table of Contents
 - [Installation Instructions](#installation-instructions)
