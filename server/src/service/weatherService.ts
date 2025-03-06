@@ -87,8 +87,8 @@ class WeatherService {
     return coordinates;
   }
 
-  // Build parseCurrentWeather method
-  private parseCurrentWeather(response: any): Weather {
+   // Build parseCurrentWeather method
+  private parseCurrentWeather(city: string, response: any): Weather {
     const currentWeather = response.list[0];
     const weather = new Weather(
       currentWeather.main.temp,
@@ -100,13 +100,17 @@ class WeatherService {
   }
 
   // Complete buildForecastArray method
-  private buildForecastArray(currentWeather: Weather, weatherData: any[]): Weather[] {
-    const forecastArray: Weather[] = weatherData.map((data) => {
+  private buildForecastArray(city: string, weatherData: any[]): Weather[] {
+    const forecastArray: Weather[] = weatherData.map((data, index) => {
+      const forecastDate = new Date(data.dt_txt);
+      forecastDate.setDate(forecastDate.getDate() + index);
       return new Weather(
         data.main.temp,
         data.main.humidity,
         data.weather[0].description,
-        data.wind.speed // Add wind speed
+        data.wind.speed,
+        data.weather[0].icon, // Access the icon property
+        forecastDate.toLocaleDateString()
       );
     });
     return [currentWeather, ...forecastArray];
