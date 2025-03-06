@@ -113,36 +113,30 @@ const renderForecast = (forecast: any): void => {
   }
 
   for (let i = 0; i < forecast.length; i++) {
-    renderForecastCard(forecast[i], i);
+    renderForecastCard(forecast[i]);
   }
 };
 
-const renderForecastCard = (forecast: any, index: number) => {
+const renderForecastCard = (forecast: any) => {
   const { date, icon, iconDescription, tempF, windSpeed, humidity } = forecast;
 
-  console.log('Forecast Data:', forecast); // Log the forecast data
-  console.log('Forecast Temperature (F):', tempF); // Log the forecast temperature
-
-  const { col, cardTitle, weatherIcon, tempEl, windEl, humidityEl } = createForecastCard();
-
-  // Parse the date string into a Date object
-  const forecastDate = new Date(date);
-
-  // Increment the date by 24 hours for each forecast card
-  forecastDate.setDate(forecastDate.getDate() + index);
-
-  console.log('Forecast Date:', forecastDate); // Log the forecast date
+  const { col, cardTitle, weatherIcon, tempEl, windEl, humidityEl } =
+    createForecastCard();
 
   // Add content to elements
-  cardTitle.textContent = forecastDate.toLocaleDateString(); // Use the updated date
-  weatherIcon.setAttribute('src', `https://openweathermap.org/img/w/${icon}.png`);
+  cardTitle.textContent = date;
+  weatherIcon.setAttribute(
+    'src',
+    `https://openweathermap.org/img/w/${icon}.png`
+  );
   weatherIcon.setAttribute('alt', iconDescription);
-  tempEl.textContent = `Temp: ${tempF.toFixed(2)} °F`;
+  tempEl.textContent = `Temp: ${tempF} °F`;
   windEl.textContent = `Wind: ${windSpeed} MPH`;
   humidityEl.textContent = `Humidity: ${humidity} %`;
 
-  col.append(cardTitle, weatherIcon, tempEl, windEl, humidityEl);
-  forecastContainer.append(col);
+  if (forecastContainer) {
+    forecastContainer.append(col);
+  }
 };
 
 const renderSearchHistory = async (searchHistory: any) => {

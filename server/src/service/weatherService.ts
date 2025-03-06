@@ -97,7 +97,7 @@ class WeatherService {
   }
 
    // Build parseCurrentWeather method
-   private parseCurrentWeather(city: string, response: any): Weather {
+  private parseCurrentWeather(city: string, response: any): Weather {
     const currentWeather = response.list[0];
     const weather = new Weather(
       city,
@@ -113,9 +113,7 @@ class WeatherService {
 
   // Complete buildForecastArray method
   private buildForecastArray(city: string, weatherData: any[]): Weather[] {
-    const forecastArray: Weather[] = weatherData.map((data, index) => {
-      const forecastDate = new Date(data.dt_txt);
-      forecastDate.setDate(forecastDate.getDate() + index);
+    const forecastArray: Weather[] = weatherData.map((data) => {
       return new Weather(
         city,
         data.main.temp,
@@ -123,7 +121,7 @@ class WeatherService {
         data.weather[0].description,
         data.wind.speed,
         data.weather[0].icon, // Access the icon property
-        forecastDate.toLocaleDateString()
+        new Date(data.dt_txt).toLocaleDateString()
       );
     });
     return forecastArray;
